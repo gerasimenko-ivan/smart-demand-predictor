@@ -1,4 +1,4 @@
-Date,Product ID,Product Name,Sold Items Count,Stock Start Count,Stock End Count,Promotion,Unit Price (NZD),Restocked Items Count,Waste Items Count
+Date,Product_ID,Product_Name,Sold_Items_Count,Stock_Start_Count,Stock_End_Count,Promotion,Unit_Price_NZD,Restocked_Items_Count,Waste_Items_Count
 2025-06-30,B001,White Bread,21,64,42,0,3.5,0,1
 2025-06-30,B002,Wholemeal Bread,16,41,25,0,4.0,0,0
 2025-06-30,D001,Milk 2L,35,36,56,0,4.5,55,0

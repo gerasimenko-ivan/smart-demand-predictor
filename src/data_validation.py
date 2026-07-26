@@ -6,15 +6,15 @@ class DataValidator:
 
     REQUIRED_COLUMNS = [
         "Date",
-        "Product ID",
-        "Product Name",
-        "Sold Items Count",
-        "Stock Start Count",
-        "Restocked Items Count",
-        "Stock End Count",
+        "Product_ID",
+        "Product_Name",
+        "Sold_Items_Count",
+        "Stock_Start_Count",
+        "Restocked_Items_Count",
+        "Stock_End_Count",
         "Promotion",
-        "Unit Price (NZD)",
-        "Waste Items Count"
+        "Unit_Price_NZD",
+        "Waste_Items_Count"
     ]
 
     def validate_sales_data(self, df: pd.DataFrame):
@@ -55,12 +55,12 @@ class DataValidator:
     def _check_negative_values(self, df):
 
         numeric_columns = [
-            "Sold Items Count",
-            "Stock Start Count",
-            "Restocked Items Count",
-            "Stock End Count",
-            "Unit Price (NZD)",
-            "Waste Items Count"
+            "Sold_Items_Count",
+            "Stock_Start_Count",
+            "Restocked_Items_Count",
+            "Stock_End_Count",
+            "Unit_Price_NZD",
+            "Waste_Items_Count"
         ]
 
         for column in numeric_columns:
@@ -74,13 +74,13 @@ class DataValidator:
     def _check_inventory_balance(self, df):
 
         expected_stock = (
-                df["Stock Start Count"]
-                + df["Restocked Items Count"]
-                - df["Sold Items Count"]
-                - df["Waste Items Count"]
+                df["Stock_Start_Count"]
+                + df["Restocked_Items_Count"]
+                - df["Sold_Items_Count"]
+                - df["Waste_Items_Count"]
         )
 
-        incorrect = expected_stock != df["Stock End Count"]
+        incorrect = expected_stock != df["Stock_End_Count"]
 
         if incorrect.any():
             rows = df[incorrect].index.tolist()
