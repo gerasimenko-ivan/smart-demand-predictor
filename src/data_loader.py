@@ -29,8 +29,14 @@ class DataLoader:
         return pd.read_csv(file_path)
 
     def load_sales_data(self) -> pd.DataFrame:
-        """
-        Load historical sales data.
-        """
-
+        """ Load historical sales data """
         return self.load_csv("sales.csv")
+
+    # def load_weather_data(self) -> pd.DataFrame:
+    #     return self.load_csv("weather.csv")
+    #
+    # def load_holidays_data(self) -> pd.DataFrame:
+    #     return self.load_csv("holidays.csv")
+    #
+    # def load_products_data(self) -> pd.DataFrame:
+    #     return self.load_csv("products.csv")
