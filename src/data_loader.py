@@ -26,7 +26,13 @@ class DataLoader:
                 f"File not found: {file_path}"
             )
 
-        return pd.read_csv(file_path)
+        df = pd.read_csv(file_path)
+
+        print(
+            f"Loaded {filename}: {len(df)} rows"
+        )
+
+        return df
 
     def load_sales_data(self) -> pd.DataFrame:
         """ Load historical sales data """
