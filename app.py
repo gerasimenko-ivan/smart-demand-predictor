@@ -1,8 +1,6 @@
 import streamlit as st
 
-from src.data_loader import DataLoader
-from src.data_validation import DataValidator
-
+from src.project_controller import ProjectController
 
 st.set_page_config(
     page_title="Smart Demand Predictor",
@@ -12,18 +10,12 @@ st.set_page_config(
 
 st.title("📦 Smart Demand Predictor")
 
-loader = DataLoader()
-validator = DataValidator()
+controller = ProjectController()
 
 try:
-    sales_df = loader.load_sales_data()
-
-    validator.validate_sales_data(sales_df)
+    sales_df = controller.load_sales_data()
 
     st.success("Sales data loaded successfully!")
-
-    st.write(f"Rows: {len(sales_df)}")
-    st.write(f"Columns: {len(sales_df.columns)}")
 
     st.dataframe(sales_df)
 
