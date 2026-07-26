@@ -36,7 +36,11 @@ class DataLoader:
 
     def load_sales_data(self) -> pd.DataFrame:
         """ Load historical sales data """
-        return self.load_csv("sales.csv")
+        df = self.load_csv("sales.csv")
+
+        df["Date"] = pd.to_datetime(df["Date"])
+
+        return df
 
     def load_weather_data(self) -> pd.DataFrame:
         df = self.load_csv("weather.csv")
