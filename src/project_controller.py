@@ -18,4 +18,10 @@ class ProjectController:
         return sales_df
 
     def load_weather_data(self):
-        return self.loader.load_weather_data()
+        weather_df = self.loader.load_weather_data()
+
+        #TODO:
+        # later:
+        # self.validator.validate_weather_data(weather_df)
+
+        return weather_df
