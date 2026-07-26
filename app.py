@@ -1,6 +1,7 @@
 import streamlit as st
 
 from src.data_loader import DataLoader
+from src.data_validation import DataValidator
 
 
 st.set_page_config(
@@ -12,9 +13,12 @@ st.set_page_config(
 st.title("📦 Smart Demand Predictor")
 
 loader = DataLoader()
+validator = DataValidator()
 
 try:
     sales_df = loader.load_sales_data()
+
+    validator.validate_sales_data(sales_df)
 
     st.success("Sales data loaded successfully!")
 
