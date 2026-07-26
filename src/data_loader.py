@@ -8,19 +8,29 @@ class DataLoader:
     def __init__(self, data_folder: str = "data"):
         self.data_folder = Path(data_folder)
 
-    def load_sales_data(self) -> pd.DataFrame:
+    def load_csv(self, filename: str) -> pd.DataFrame:
         """
-        Load sales.csv into a pandas DataFrame.
+        Generic CSV loader.
+
+        Args:
+            filename: CSV file name inside data folder.
 
         Returns:
-            pd.DataFrame
+            pandas DataFrame
         """
 
-        file_path = self.data_folder / "sales.csv"
+        file_path = self.data_folder / filename
 
         if not file_path.exists():
-            raise FileNotFoundError(f"File not found: {file_path}")
+            raise FileNotFoundError(
+                f"File not found: {file_path}"
+            )
 
-        df = pd.read_csv(file_path)
+        return pd.read_csv(file_path)
 
-        return df
+    def load_sales_data(self) -> pd.DataFrame:
+        """
+        Load historical sales data.
+        """
+
+        return self.load_csv("sales.csv")
