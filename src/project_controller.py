@@ -25,3 +25,12 @@ class ProjectController:
         # self.validator.validate_weather_data(weather_df)
 
         return weather_df
+
+    def load_holiday_data(self):
+        holiday_df = self.loader.load_holidays_data()
+
+        #TODO:
+        # later:
+        # self.validator.validate_holiday_data(holiday_df)
+
+        return holiday_df

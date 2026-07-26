@@ -49,8 +49,12 @@ class DataLoader:
 
         return df
 
-    # def load_holidays_data(self) -> pd.DataFrame:
-    #     return self.load_csv("holidays.csv")
-    #
+    def load_holidays_data(self) -> pd.DataFrame:
+        df = self.load_csv("holidays.csv")
+
+        df["Date"] = pd.to_datetime(df["Date"])
+
+        return df
+
     # def load_products_data(self) -> pd.DataFrame:
     #     return self.load_csv("products.csv")
