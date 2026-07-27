@@ -3,7 +3,7 @@ import pandas as pd
 
 class FeatureEngineer:
 
-    def build_feature_dataset(
+    def prepare_training_data(
         self,
         sales,
         weather,

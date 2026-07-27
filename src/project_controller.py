@@ -55,7 +55,7 @@ class ProjectController:
 
         product_df = self.load_product_data()
 
-        dataset = self.feature_engineer.build_feature_dataset(
+        dataset = self.feature_engineer.prepare_training_data(
             sales_df,
             weather_df,
             holiday_df,
