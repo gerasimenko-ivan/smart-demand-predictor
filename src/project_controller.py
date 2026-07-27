@@ -1,5 +1,6 @@
 from src.data_loader import DataLoader
 from src.data_validation import DataValidator
+from src.feature_engineering import FeatureEngineer
 
 
 class ProjectController:
@@ -8,6 +9,7 @@ class ProjectController:
 
         self.loader = DataLoader()
         self.validator = DataValidator()
+        self.feature_engineer = FeatureEngineer()
 
     def load_sales_data(self):
 
@@ -43,3 +45,21 @@ class ProjectController:
         # self.validator.validate_product_data(product_df)
 
         return product_df
+
+    def build_training_dataset(self):
+        sales_df = self.load_sales_data()
+
+        weather_df = self.load_weather_data()
+
+        holiday_df = self.load_holiday_data()
+
+        product_df = self.load_product_data()
+
+        dataset = self.feature_engineer.build_feature_dataset(
+            sales_df,
+            weather_df,
+            holiday_df,
+            product_df
+        )
+
+        return dataset

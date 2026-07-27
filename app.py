@@ -32,5 +32,10 @@ try:
     st.header("Products")
     st.dataframe(products_df)
 
+    dataset = controller.build_training_dataset()
+
+    st.header("Dataset")
+    st.dataframe(dataset)
+
 except Exception as e:
     st.error(str(e))
