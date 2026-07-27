@@ -1,26 +1,26 @@
-Product_ID,Product_Name,Category,Price,Cost,Shelf_Life_Days,Storage_Type,Minimum_Order_Quantity,Lead_Time_Days
-D001,Milk 2L,Dairy,4.99,3.2,7,Chilled,20,2
-D002,Eggs (12 pack),Dairy,7.5,4.8,21,Chilled,12,2
-D003,Butter 500g,Dairy,6.0,3.9,90,Chilled,24,3
-D004,Cheese 500g,Dairy,8.0,5.2,120,Chilled,12,3
-B001,White Bread,Bakery,3.5,2.1,5,Ambient,20,1
-B002,Wholemeal Bread,Bakery,4.0,2.4,5,Ambient,20,1
-F001,Bananas,Fruit,3.2,2.0,5,Ambient,30,2
-F002,Apples,Fruit,4.5,2.8,14,Chilled,24,2
-DR001,Bottled Water 600mL,Drinks,2.5,1.2,365,Ambient,48,2
-DR002,Coke 1.5L,Drinks,3.8,2.1,270,Ambient,24,2
-DR003,Orange Juice 2L,Drinks,5.5,3.5,21,Chilled,12,2
-DR004,Energy Drink 250mL,Drinks,4.0,2.3,365,Ambient,24,2
-S001,Potato Chips,Snacks,3.0,1.6,180,Ambient,24,3
-S002,Chocolate Bar,Snacks,2.8,1.4,365,Ambient,48,3
-S003,Cookies,Snacks,4.5,2.6,180,Ambient,24,3
-FR001,Ice Cream 1L,Frozen,6.5,3.8,365,Frozen,12,3
-FR002,Frozen Pizza,Frozen,8.0,4.5,365,Frozen,12,3
-P001,Instant Noodles,Pantry,2.0,1.1,730,Ambient,48,4
-P002,Rice 1kg,Pantry,3.5,2.1,730,Ambient,24,4
-P003,Pasta 500g,Pantry,2.8,1.5,730,Ambient,24,4
-P004,Cereal,Pantry,5.0,3.0,365,Ambient,18,3
-H001,Toilet Paper,Household,8.0,4.5,730,Ambient,24,5
-H002,Laundry Detergent,Household,12.0,7.5,730,Ambient,12,5
-PC001,Shampoo,Personal Care,9.5,5.8,730,Ambient,12,4
-PC002,Toothpaste,Personal Care,4.5,2.7,730,Ambient,24,4
+Product_ID,Product_Name,Category,Price,Cost,Shelf_Life_Days,Storage_Type,Minimum_Order_Quantity,Lead_Time_Days,Seasonality_Group,Promotion_Eligible,Margin
+D001,Milk 2L,Dairy,4.99,3.2,7,Chilled,20,2,All Year,Yes,35.87
+D002,Eggs (12 pack),Dairy,7.5,4.8,21,Chilled,12,2,All Year,Yes,36.0
+D003,Butter 500g,Dairy,6.0,3.9,90,Chilled,24,3,All Year,Yes,35.0
+D004,Cheese 500g,Dairy,8.0,5.2,120,Chilled,12,3,All Year,Yes,35.0
+B001,White Bread,Bakery,3.5,2.1,5,Ambient,20,1,All Year,Yes,40.0
+B002,Wholemeal Bread,Bakery,4.0,2.4,5,Ambient,20,1,All Year,Yes,40.0
+F001,Bananas,Fruit,3.2,2.0,5,Ambient,30,2,All Year,Yes,37.5
+F002,Apples,Fruit,4.5,2.8,14,Chilled,24,2,All Year,Yes,37.78
+DR001,Bottled Water 600mL,Drinks,2.5,1.2,365,Ambient,48,2,Summer,Yes,52.0
+DR002,Coke 1.5L,Drinks,3.8,2.1,270,Ambient,24,2,Summer,Yes,44.74
+DR003,Orange Juice 2L,Drinks,5.5,3.5,21,Chilled,12,2,Summer,Yes,36.36
+DR004,Energy Drink 250mL,Drinks,4.0,2.3,365,Ambient,24,2,All Year,Yes,42.5
+S001,Potato Chips,Snacks,3.0,1.6,180,Ambient,24,3,All Year,Yes,46.67
+S002,Chocolate Bar,Snacks,2.8,1.4,365,Ambient,48,3,Winter,Yes,50.0
+S003,Cookies,Snacks,4.5,2.6,180,Ambient,24,3,All Year,Yes,42.22
+FR001,Ice Cream 1L,Frozen,6.5,3.8,365,Frozen,12,3,Summer,Yes,41.54
+FR002,Frozen Pizza,Frozen,8.0,4.5,365,Frozen,12,3,All Year,Yes,43.75
+P001,Instant Noodles,Pantry,2.0,1.1,730,Ambient,48,4,Winter,Yes,45.0
+P002,Rice 1kg,Pantry,3.5,2.1,730,Ambient,24,4,All Year,Yes,40.0
+P003,Pasta 500g,Pantry,2.8,1.5,730,Ambient,24,4,All Year,Yes,46.43
+P004,Cereal,Pantry,5.0,3.0,365,Ambient,18,3,All Year,Yes,40.0
+H001,Toilet Paper,Household,8.0,4.5,730,Ambient,24,5,All Year,Yes,43.75
+H002,Laundry Detergent,Household,12.0,7.5,730,Ambient,12,5,All Year,Yes,37.5
+PC001,Shampoo,Personal Care,9.5,5.8,730,Ambient,12,4,All Year,Yes,38.95
+PC002,Toothpaste,Personal Care,4.5,2.7,730,Ambient,24,4,All Year,Yes,40.0
