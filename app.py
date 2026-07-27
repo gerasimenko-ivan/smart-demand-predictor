@@ -25,7 +25,15 @@ try:
             f"Model trained! MAE = {result['mae']:.2f}"
         )
 
-        st.dataframe(result["results"])
+        week = result["results"]
+
+        week = week[
+            (week["Date"] >= "2026-06-20") &
+            (week["Date"] <= "2026-06-26")
+            ]
+
+        st.dataframe(week)
+        # st.dataframe(result["results"])
 
     st.success("Sales, weather data loaded successfully!")
 
