@@ -45,14 +45,47 @@ class DataLoader:
     def load_weather_data(self) -> pd.DataFrame:
         df = self.load_csv("weather.csv")
 
+        # Date
         df["Date"] = pd.to_datetime(df["Date"])
+
+        # Numeric conversion
+        numeric_columns = [
+            "Tavg",
+            "Tmin",
+            "Tmax",
+            "Precipitation",
+            "Wind_Speed",
+            "Peak_Gust",
+            "Air_Pressure",
+            "Sunshine_Duration"
+        ]
+
+        for col in numeric_columns:
+            df[col] = pd.to_numeric(
+                df[col],
+                errors="coerce"
+            )
+
+            # TODO Remove columns we don't want
+            # df = df.drop(columns=[
+            #     "Snow",
+            #     "Wind_Direction",
+            #     "Peak_Gust",
+            #     "Sunshine_Duration"
+            # ])
 
         return df
 
     def load_holidays_data(self) -> pd.DataFrame:
         df = self.load_csv("holidays.csv")
 
+        # Date
         df["Date"] = pd.to_datetime(df["Date"])
+
+        # Boolean
+        df["Holiday"] = df["Holiday"].astype(bool)
+        df["Workday"] = df["Workday"].astype(bool)
+        df["Event"] = df["Event"].astype(bool)
 
         return df
 
