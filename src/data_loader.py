@@ -89,5 +89,7 @@ class DataLoader:
 
         return df
 
-    # def load_products_data(self) -> pd.DataFrame:
-    #     return self.load_csv("products.csv")
+    def load_products_data(self) -> pd.DataFrame:
+        df = self.load_csv("products.csv")
+
+        return df

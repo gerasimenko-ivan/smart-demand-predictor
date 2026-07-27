@@ -34,3 +34,12 @@ class ProjectController:
         # self.validator.validate_holiday_data(holiday_df)
 
         return holiday_df
+
+    def load_product_data(self):
+        product_df = self.loader.load_products_data()
+
+        #TODO:
+        # later:
+        # self.validator.validate_product_data(product_df)
+
+        return product_df

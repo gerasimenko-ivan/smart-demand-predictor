@@ -16,6 +16,7 @@ try:
     sales_df = controller.load_sales_data()
     weather_df = controller.load_weather_data()
     holiday_df = controller.load_holiday_data()
+    products_df = controller.load_product_data()
 
     st.success("Sales, weather data loaded successfully!")
 
@@ -27,6 +28,9 @@ try:
 
     st.header("Holiday")
     st.dataframe(holiday_df)
+
+    st.header("Products")
+    st.dataframe(products_df)
 
 except Exception as e:
     st.error(str(e))
