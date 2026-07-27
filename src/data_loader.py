@@ -85,9 +85,9 @@ class DataLoader:
         df["Date"] = pd.to_datetime(df["Date"])
 
         # Boolean
-        df["Holiday"] = df["Holiday"].astype(bool)
-        df["Workday"] = df["Workday"].astype(bool)
-        df["Event"] = df["Event"].astype(bool)
+        # df["Holiday"] = df["Holiday"].astype(bool)
+        # df["Workday"] = df["Workday"].astype(bool)
+        # df["Event"] = df["Event"].astype(bool)
 
         return df
 

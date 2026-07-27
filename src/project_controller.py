@@ -64,6 +64,8 @@ class ProjectController:
             product_df
         )
 
+        print(dataset.columns)
+
         return dataset
 
     def train_forecast_model(self):
