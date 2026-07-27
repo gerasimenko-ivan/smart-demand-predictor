@@ -19,6 +19,20 @@ try:
     holiday_df = controller.load_holiday_data()
     products_df = controller.load_product_data()
 
+    if st.button("Train model"):
+        result = controller.train_forecast_model()
+
+        st.success(
+            f"Model trained! MAE = {result['mae']:.2f}"
+        )
+
+        comparison = pd.DataFrame({
+            "Actual": result["actual"].values,
+            "Predicted": result["predicted"]
+        })
+
+        st.dataframe(comparison.head(20))
+
     st.success("Sales, weather data loaded successfully!")
 
     st.header("Sales")
@@ -37,20 +51,6 @@ try:
 
     st.header("Dataset")
     st.dataframe(dataset)
-
-    if st.button("Train model"):
-        result = controller.train_forecast_model()
-
-        st.success(
-            f"Model trained! MAE = {result['mae']:.2f}"
-        )
-
-        comparison = pd.DataFrame({
-            "Actual": result["actual"].values,
-            "Predicted": result["predicted"]
-        })
-
-        st.dataframe(comparison.head(20))
 
 except Exception as e:
     st.error(str(e))

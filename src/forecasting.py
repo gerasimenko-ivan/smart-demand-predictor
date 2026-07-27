@@ -22,7 +22,8 @@ class ForecastModel:
             columns=[
                 "Sold_Items_Count",
                 "Date",
-                "Product_Name"
+                "Product_Name",
+                "Promotion_Eligible",
             ],
             errors="ignore"
         )
@@ -30,13 +31,36 @@ class ForecastModel:
         # Convert text columns to numbers
         X = pd.get_dummies(X)
 
-        return X, y
+        self.validate_features(X)
+
+        return X, y, df["Date"], df["Product_Name"]
+
+    def validate_features(self, X):
+
+        non_numeric = X.select_dtypes(
+            exclude=["number"]
+        )
+
+        if not non_numeric.empty:
+            raise ValueError(
+                f"Non-numeric columns: {list(non_numeric.columns)}"
+            )
+
+        # TODO: check for missing values
+        # missing = X.isnull().sum()
+        #
+        # missing = missing[missing > 0]
+        #
+        # if not missing.empty:
+        #     raise ValueError(
+        #         f"Missing values:\n{missing}"
+        #     )
 
 
     def train(self, df):
-        X, y = self.prepare_data(df)
+        X, y, dates, product_names = self.prepare_data(df)
 
-        X_train, X_test, y_train, y_test = self.split_data(X, y)
+        X_train, X_test, y_train, y_test, dates_train, dates_test = self.split_data(X, y, dates)
 
         print(f"Training rows: {len(X_train)}")
         print(f"Testing rows: {len(X_test)}")
@@ -55,13 +79,13 @@ class ForecastModel:
 
 
     def predict(self, df):
-        X, _ = self.prepare_data(df)
+        X, _, _, _ = self.prepare_data(df)
 
         predictions = self.model.predict(X)
 
         return predictions
 
-    def split_data(self, X, y):
+    def split_data(self, X, y, dates):
         # Important:
         # do NOT shuffle time series data
         split_index = int(len(X) * 0.8)
@@ -72,4 +96,7 @@ class ForecastModel:
         y_train = y.iloc[:split_index]
         y_test = y.iloc[split_index:]
 
-        return X_train, X_test, y_train, y_test
+        dates_train = dates.iloc[:split_index]
+        dates_test = dates.iloc[split_index:]
+
+        return X_train, X_test, y_train, y_test, dates_train, dates_test

@@ -37,15 +37,6 @@ class FeatureEngineer:
         df["DayOfYear"] = df["Date"].dt.dayofyear
         df["Year"] = df["Date"].dt.year
 
-        df = df.drop(
-            columns=[
-                "Product_Name",
-                "Date",
-                "Promotion_Eligible",
-            ],
-            errors="ignore"
-        )
-
         categorical_columns = [
             "Product_ID",
             "Category",
@@ -61,17 +52,4 @@ class FeatureEngineer:
 
         print(df.dtypes)
 
-        self.validate_numeric_features(df)
-
         return df
-
-    def validate_numeric_features(self, X):
-        non_numeric = X.select_dtypes(
-            exclude=["number"]
-        )
-
-        if not non_numeric.empty:
-            raise ValueError(
-                f"These columns are not numeric:\n"
-                f"{list(non_numeric.columns)}"
-            )
