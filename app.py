@@ -18,6 +18,19 @@ try:
     holiday_df = controller.load_holiday_data()
     products_df = controller.load_product_data()
 
+    selected_product = st.sidebar.selectbox(
+        "Product",
+        sorted(products_df["Product_Name"].values)
+    )
+
+    start_date = st.sidebar.date_input(
+        "Start date of the week"
+    )
+
+    # end_date = st.sidebar.date_input(
+    #     "End date"
+    # )
+
     if st.button("Train model"):
         result = controller.train_forecast_model()
 
@@ -33,6 +46,13 @@ try:
             ]
 
         st.dataframe(week)
+
+        # chart_df = week.set_index("Date")
+        #
+        # st.line_chart(
+        #     chart_df[["Actual", "Predicted"]]
+        # )
+
         # st.dataframe(result["results"])
 
     st.success("Sales, weather data loaded successfully!")
