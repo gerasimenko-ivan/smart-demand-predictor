@@ -71,7 +71,7 @@ class ForecastModel:
         dates = data["dates"]
         products = data["products"]
 
-        X_train, X_test, y_train, y_test, dates_train, dates_test = self.split_data(X, y, dates)
+        X_train, X_test, y_train, y_test, dates_train, dates_test, products_train, products_test = self.split_data(X, y, dates, products)
 
         print(f"Training rows: {len(X_train)}")
         print(f"Testing rows: {len(X_test)}")
@@ -82,10 +82,20 @@ class ForecastModel:
 
         mae = mean_absolute_error(y_test, predictions)
 
+        results = pd.DataFrame({
+            "Date": dates_test.values,
+            "Product": products_test.values,
+            "Actual": y_test.values,
+            "Predicted": predictions
+        })
+
+        results["Error"] = (
+                results["Predicted"] - results["Actual"]
+        )
+
         return {
             "mae": mae,
-            "actual": y_test,
-            "predicted": predictions
+            "results": results
         }
 
 
@@ -96,7 +106,7 @@ class ForecastModel:
 
         return predictions
 
-    def split_data(self, X, y, dates):
+    def split_data(self, X, y, dates, products):
         # Important:
         # do NOT shuffle time series data
         split_index = int(len(X) * 0.8)
@@ -110,4 +120,7 @@ class ForecastModel:
         dates_train = dates.iloc[:split_index]
         dates_test = dates.iloc[split_index:]
 
-        return X_train, X_test, y_train, y_test, dates_train, dates_test
+        products_train = products.iloc[:split_index]
+        products_test = products.iloc[split_index:]
+
+        return X_train, X_test, y_train, y_test, dates_train, dates_test, products_train, products_test

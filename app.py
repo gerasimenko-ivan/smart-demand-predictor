@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 
 from src.project_controller import ProjectController
 
@@ -26,12 +25,7 @@ try:
             f"Model trained! MAE = {result['mae']:.2f}"
         )
 
-        comparison = pd.DataFrame({
-            "Actual": result["actual"].values,
-            "Predicted": result["predicted"]
-        })
-
-        st.dataframe(comparison.head(20))
+        st.dataframe(result["results"])
 
     st.success("Sales, weather data loaded successfully!")
 
