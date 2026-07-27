@@ -18,18 +18,28 @@ try:
     holiday_df = controller.load_holiday_data()
     products_df = controller.load_product_data()
 
+    st.sidebar.header("Forecast Settings")
+
+    products = sorted(
+        sales_df["Product_Name"].unique()
+    )
+
     selected_product = st.sidebar.selectbox(
-        "Product",
-        sorted(products_df["Product_Name"].values)
+        "Select product",
+        sorted(products)
     )
 
     start_date = st.sidebar.date_input(
-        "Start date of the week"
+        "Forecast start date"
     )
 
     # end_date = st.sidebar.date_input(
     #     "End date"
     # )
+
+    forecast_button = st.sidebar.button(
+        "📈 Generate Forecast"
+    )
 
     if st.button("Train model"):
         result = controller.train_forecast_model()
