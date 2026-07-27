@@ -34,9 +34,34 @@ class ForecastModel:
 
 
     def train(self, df):
-
         X, y = self.prepare_data(df)
 
+        X_train, X_test, y_train, y_test = self.split_data(X, y)
+
+        print(f"Training rows: {len(X_train)}")
+        print(f"Testing rows: {len(X_test)}")
+
+        self.model.fit(X_train, y_train)
+
+        predictions = self.model.predict(X_test)
+
+        mae = mean_absolute_error(y_test, predictions)
+
+        return {
+            "mae": mae,
+            "actual": y_test,
+            "predicted": predictions
+        }
+
+
+    def predict(self, df):
+        X, _ = self.prepare_data(df)
+
+        predictions = self.model.predict(X)
+
+        return predictions
+
+    def split_data(self, X, y):
         # Important:
         # do NOT shuffle time series data
         split_index = int(len(X) * 0.8)
@@ -47,30 +72,4 @@ class ForecastModel:
         y_train = y.iloc[:split_index]
         y_test = y.iloc[split_index:]
 
-
-        self.model.fit(
-            X_train,
-            y_train
-        )
-
-
-        predictions = self.model.predict(
-            X_test
-        )
-
-
-        mae = mean_absolute_error(
-            y_test,
-            predictions
-        )
-
-        return mae
-
-
-    def predict(self, df):
-
-        X, _ = self.prepare_data(df)
-
-        predictions = self.model.predict(X)
-
-        return predictions
+        return X_train, X_test, y_train, y_test

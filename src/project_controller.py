@@ -71,6 +71,6 @@ class ProjectController:
     def train_forecast_model(self):
         dataset = self.build_training_dataset()
 
-        mae = self.forecaster.train(dataset)
+        result = self.forecaster.train(dataset)
 
-        return mae
+        return result

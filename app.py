@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 from src.project_controller import ProjectController
 
@@ -38,11 +39,18 @@ try:
     st.dataframe(dataset)
 
     if st.button("Train model"):
-        mae = controller.train_forecast_model()
+        result = controller.train_forecast_model()
 
         st.success(
-            f"Model trained. Average error: {mae:.2f} items"
+            f"Model trained! MAE = {result['mae']:.2f}"
         )
+
+        comparison = pd.DataFrame({
+            "Actual": result["actual"].values,
+            "Predicted": result["predicted"]
+        })
+
+        st.dataframe(comparison.head(20))
 
 except Exception as e:
     st.error(str(e))
