@@ -12,6 +12,9 @@ class ForecastModel:
             random_state=42
         )
 
+        self.results = None
+        self.is_trained = False
+
     def prepare_data(self, df):
 
         # Target
@@ -93,11 +96,43 @@ class ForecastModel:
                 results["Predicted"] - results["Actual"]
         )
 
-        return {
+        self.results = {
             "mae": mae,
             "results": results
         }
 
+        self.is_trained = True
+
+        return self.results
+
+    def get_results(self):
+        return self.results
+
+    def predict_product(
+            self,
+            product_name,
+            start_date,
+            end_date
+    ):
+
+        if not self.is_trained:
+            raise RuntimeError(
+                "Model has not been trained."
+            )
+
+        df = self.results["results"]
+
+        product = df[
+            df["Product"] == product_name
+            ]
+
+        product = product[
+            (product["Date"] >= start_date)
+            &
+            (product["Date"] <= end_date)
+            ]
+
+        return product
 
     def predict(self, df):
         X, _, _, _ = self.prepare_data(df)

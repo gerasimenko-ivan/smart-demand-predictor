@@ -11,7 +11,7 @@ class ProjectController:
         self.loader = DataLoader()
         self.validator = DataValidator()
         self.feature_engineer = FeatureEngineer()
-        self.forecaster = ForecastModel()
+        self.forecast_model = ForecastModel()
 
     def load_sales_data(self):
 
@@ -68,9 +68,36 @@ class ProjectController:
 
         return dataset
 
-    def train_forecast_model(self):
-        dataset = self.build_training_dataset()
+    def train_model(self):
+        sales = self.load_sales_data()
+        weather = self.load_weather_data()
+        holidays = self.load_holiday_data()
+        products = self.load_product_data()
 
-        result = self.forecaster.train(dataset)
+        dataset = self.feature_engineer.prepare_training_data(
+            sales,
+            weather,
+            holidays,
+            products
+        )
 
-        return result
+        self.forecast_model.train(dataset)
+        self.forecast_model.is_trained = True
+
+    def get_training_results(self):
+        return self.forecast_model.get_results()
+
+    def is_model_trained(self):
+        return self.forecast_model.is_trained
+
+    def predict(
+            self,
+            product,
+            start_date,
+            end_date
+    ):
+        return self.forecast_model.predict_product(
+            product,
+            start_date,
+            end_date
+        )

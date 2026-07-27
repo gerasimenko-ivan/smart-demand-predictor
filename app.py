@@ -14,7 +14,11 @@ st.title("🛒 Smart Demand Predictor")
 # --------------------------------------------------
 # Controller
 # --------------------------------------------------
-controller = ProjectController()
+if "controller" not in st.session_state:
+
+    st.session_state["controller"] = ProjectController()
+
+controller = st.session_state["controller"]
 
 # --------------------------------------------------
 # Load data
@@ -33,44 +37,38 @@ except Exception as e:
     st.stop()
 
 # --------------------------------------------------
-# Train model
+# Model status and training
 # --------------------------------------------------
 
-if "model_trained" not in st.session_state:
-    st.session_state["model_trained"] = False
+if not controller.is_model_trained():
+    st.warning("🔴 AI Model: Not trained. Click button  [ **✨ Train AI Model** ]  to continue.")
 
-if "forecast_result" not in st.session_state:
-    st.session_state["forecast_result"] = None
+    train_button = st.button(
+        "✨ Train AI Model",
+        type="primary"
+    )
 
+    if train_button:
+        with st.spinner("Training AI model..."):
+            controller.train_model()
+        st.success("✅ Model trained successfully!")
+        st.rerun()
 
-train_button = st.button(
-    "✨ Train AI Model",
-    type="primary"
-)
+    st.stop()
 
-if train_button:
-
-    with st.spinner("Training AI model..."):
-
-        result = controller.train_forecast_model()
-
-    st.session_state["forecast_result"] = result
-    st.session_state["model_trained"] = True
-
-
-# --------------------------------------------------
-# Status
-# --------------------------------------------------
-
-if st.session_state["model_trained"]:
+else:
+    training = controller.get_training_results()
 
     st.success("🟢 AI Model: Ready")
 
-else:
+    st.info(
+        f"Model accuracy (MAE): {training['mae']:.2f} items"
+    )
 
-    st.warning("🔴 AI Model: Not trained. Click button  [ **✨ Train AI Model** ] above to continue.")
-    st.stop()
-
+    if st.button("🔄 Retrain Model"):
+        with st.spinner("Retraining..."):
+            controller.train_model()
+        st.rerun()
 
 # --------------------------------------------------
 # Sidebar
@@ -102,38 +100,37 @@ forecast_button = st.sidebar.button(
 
 if forecast_button:
 
-    result = st.session_state["forecast_result"]
-
-    st.success(
-        f"Model MAE: {result['mae']:.2f} items"
-    )
-
-    results = result["results"]
-
-    product_results = results[
-        results["Product"] == selected_product
-    ]
-
     start_date = pd.to_datetime(selected_date)
     end_date = start_date + pd.Timedelta(days=6)
 
-    week_results = product_results[
-        (product_results["Date"] >= start_date)
-        &
-        (product_results["Date"] <= end_date)
-    ]
-
-    st.subheader(selected_product)
-
-    chart = week_results.set_index("Date")
-
-    st.line_chart(
-        chart[
-            [
-                "Actual",
-                "Predicted"
-            ]
-        ]
+    week = controller.predict(
+        selected_product,
+        start_date,
+        end_date
     )
 
-    st.dataframe(week_results)
+    if week.empty:
+        st.warning(
+            "No forecast data available for this product and period."
+        )
+
+    else:
+        st.subheader(
+            f"Forecast: {selected_product}"
+        )
+
+        chart = week.set_index("Date")
+
+        st.line_chart(
+            chart[
+                [
+                    "Actual",
+                    "Predicted"
+                ]
+            ]
+        )
+
+        st.dataframe(
+            week,
+            use_container_width=True
+        )
