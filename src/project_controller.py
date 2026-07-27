@@ -1,6 +1,7 @@
 from src.data_loader import DataLoader
 from src.data_validation import DataValidator
 from src.feature_engineering import FeatureEngineer
+from src.forecasting import ForecastModel
 
 
 class ProjectController:
@@ -10,6 +11,7 @@ class ProjectController:
         self.loader = DataLoader()
         self.validator = DataValidator()
         self.feature_engineer = FeatureEngineer()
+        self.forecaster = ForecastModel()
 
     def load_sales_data(self):
 
@@ -63,3 +65,10 @@ class ProjectController:
         )
 
         return dataset
+
+    def train_forecast_model(self):
+        dataset = self.build_training_dataset()
+
+        mae = self.forecaster.train(dataset)
+
+        return mae

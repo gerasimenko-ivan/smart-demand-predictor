@@ -37,5 +37,12 @@ try:
     st.header("Dataset")
     st.dataframe(dataset)
 
+    if st.button("Train model"):
+        mae = controller.train_forecast_model()
+
+        st.success(
+            f"Model trained. Average error: {mae:.2f} items"
+        )
+
 except Exception as e:
     st.error(str(e))
