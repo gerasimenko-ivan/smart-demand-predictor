@@ -55,9 +55,7 @@ class DataLoader:
             "Tmax",
             "Precipitation",
             "Wind_Speed",
-            "Peak_Gust",
             "Air_Pressure",
-            "Sunshine_Duration"
         ]
 
         for col in numeric_columns:
@@ -66,13 +64,17 @@ class DataLoader:
                 errors="coerce"
             )
 
-            # TODO Remove columns we don't want
-            # df = df.drop(columns=[
-            #     "Snow",
-            #     "Wind_Direction",
-            #     "Peak_Gust",
-            #     "Sunshine_Duration"
-            # ])
+        columns_to_keep = [
+            "Date",
+            "Tavg",
+            "Tmin",
+            "Tmax",
+            "Precipitation",
+            "Wind_Speed",
+            "Air_Pressure",
+        ]
+
+        df = df[columns_to_keep]
 
         return df
 
