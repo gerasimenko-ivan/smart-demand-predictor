@@ -39,16 +39,4 @@ class FeatureEngineer:
 
         df["DayOfYear"] = df["Date"].dt.dayofyear
 
-        df["IsWeekend"] = (df["DayOfWeek"] >= 5).astype(int)
-
-        df["PromotionFlag"] = (df["Promotion"] == "Yes").astype(int)
-
-        df["HolidayFlag"] = (
-            df["Holiday"].fillna("No") != "No"
-        ).astype(int)
-
-        df["RainFlag"] = (
-            df["Precipitation"] > 0
-        ).astype(int)
-
         return df
