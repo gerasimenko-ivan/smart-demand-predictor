@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 from src.project_controller import ProjectController
 
@@ -25,12 +26,12 @@ try:
     )
 
     selected_product = st.sidebar.selectbox(
-        "Select product",
+        "📦 Product",
         sorted(products)
     )
 
-    start_date = st.sidebar.date_input(
-        "Forecast start date"
+    selected_date = st.sidebar.date_input(
+        "📅 Week starting"
     )
 
     # end_date = st.sidebar.date_input(
@@ -41,48 +42,85 @@ try:
         "📈 Generate Forecast"
     )
 
-    if st.button("Train model"):
+    if forecast_button:
         result = controller.train_forecast_model()
 
         st.success(
-            f"Model trained! MAE = {result['mae']:.2f}"
+            f"Model trained (MAE = {result['mae']:.2f})"
         )
 
-        week = result["results"]
+        results = result["results"]
 
-        week = week[
-            (week["Date"] >= "2026-06-20") &
-            (week["Date"] <= "2026-06-26")
+        product_results = results[
+            results["Product"] == selected_product
             ]
 
-        st.dataframe(week)
+        start_date = pd.to_datetime(selected_date)
 
-        # chart_df = week.set_index("Date")
-        #
-        # st.line_chart(
-        #     chart_df[["Actual", "Predicted"]]
-        # )
+        end_date = start_date + pd.Timedelta(days=6)
 
-        # st.dataframe(result["results"])
+        week_results = product_results[
+            (product_results["Date"] >= start_date) &
+            (product_results["Date"] <= end_date)
+            ]
 
-    st.success("Sales, weather data loaded successfully!")
+        st.subheader(selected_product)
 
-    st.header("Sales")
-    st.dataframe(sales_df)
+        chart = week_results.set_index("Date")
 
-    st.header("Weather")
-    st.dataframe(weather_df)
+        st.line_chart(
+            chart[
+                [
+                    "Actual",
+                    "Predicted"
+                ]
+            ]
+        )
 
-    st.header("Holiday")
-    st.dataframe(holiday_df)
+        st.dataframe(week_results)
 
-    st.header("Products")
-    st.dataframe(products_df)
+    # if st.button("Train model"):
+    #     result = controller.train_forecast_model()
+    #
+    #     st.success(
+    #         f"Model trained! MAE = {result['mae']:.2f}"
+    #     )
+    #
+    #     week = result["results"]
+    #
+    #     week = week[
+    #         (week["Date"] >= "2026-06-20") &
+    #         (week["Date"] <= "2026-06-26")
+    #         ]
+    #
+    #     st.dataframe(week)
+    #
+    #     # chart_df = week.set_index("Date")
+    #     #
+    #     # st.line_chart(
+    #     #     chart_df[["Actual", "Predicted"]]
+    #     # )
+    #
+    #     # st.dataframe(result["results"])
 
-    dataset = controller.build_training_dataset()
-
-    st.header("Dataset")
-    st.dataframe(dataset)
+    # st.success("Sales, weather data loaded successfully!")
+    #
+    # st.header("Sales")
+    # st.dataframe(sales_df)
+    #
+    # st.header("Weather")
+    # st.dataframe(weather_df)
+    #
+    # st.header("Holiday")
+    # st.dataframe(holiday_df)
+    #
+    # st.header("Products")
+    # st.dataframe(products_df)
+    #
+    # dataset = controller.build_training_dataset()
+    #
+    # st.header("Dataset")
+    # st.dataframe(dataset)
 
 except Exception as e:
     st.error(str(e))
