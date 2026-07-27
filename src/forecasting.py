@@ -33,7 +33,12 @@ class ForecastModel:
 
         self.validate_features(X)
 
-        return X, y, df["Date"], df["Product_Name"]
+        return {
+            "X": X,
+            "y": y,
+            "dates": df["Date"],
+            "products": df["Product_Name"]
+        }
 
     def validate_features(self, X):
 
@@ -58,7 +63,13 @@ class ForecastModel:
 
 
     def train(self, df):
-        X, y, dates, product_names = self.prepare_data(df)
+        # X, y, dates, product_names = self.prepare_data(df)
+        data = self.prepare_data(df)
+
+        X = data["X"]
+        y = data["y"]
+        dates = data["dates"]
+        products = data["products"]
 
         X_train, X_test, y_train, y_test, dates_train, dates_test = self.split_data(X, y, dates)
 
