@@ -101,3 +101,6 @@ class ProjectController:
             start_date,
             end_date
         )
+
+    def get_feature_importance(self):
+        return self.forecast_model.feature_importance

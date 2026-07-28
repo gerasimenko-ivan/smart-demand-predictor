@@ -135,11 +135,22 @@ if forecast_button:
             use_container_width=True
         )
 
+        ##### Predicted demand
+
         predicted_demand = round(
             week["Predicted"].sum()
         )
 
-        st.metric(
-            "Predicted demand:",
-            f"{predicted_demand} items"
+        st.subheader(f"📦 Predicted Demand: {predicted_demand} items")
+
+        ##### Reorder recommendation
+
+        ##### Feature importance
+
+        st.subheader("⭐ Feature importance")
+
+        importance = controller.get_feature_importance()
+
+        st.bar_chart(
+            importance.set_index("Feature")
         )

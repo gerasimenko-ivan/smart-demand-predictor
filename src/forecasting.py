@@ -13,6 +13,7 @@ class ForecastModel:
         )
 
         self.results = None
+        self.feature_importance = None
         self.is_trained = False
 
     def prepare_data(self, df):
@@ -102,6 +103,21 @@ class ForecastModel:
         }
 
         self.is_trained = True
+
+        importance = pd.DataFrame({
+
+            "Feature": X.columns,
+
+            "Importance": self.model.feature_importances_
+
+        })
+
+        importance = importance.sort_values(
+            "Importance",
+            ascending=False
+        )
+
+        self.feature_importance = importance
 
         return self.results
 
