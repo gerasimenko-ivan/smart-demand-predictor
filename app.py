@@ -65,10 +65,10 @@ else:
         f"Model accuracy (MAE): {training['mae']:.2f} items"
     )
 
-    if st.button("🔄 Retrain Model"):
-        with st.spinner("Retraining..."):
-            controller.train_model()
-        st.rerun()
+    # if st.button("🔄 Retrain Model"):
+    #     with st.spinner("Retraining..."):
+    #         controller.train_model()
+    #     st.rerun()
 
 # --------------------------------------------------
 # Sidebar
