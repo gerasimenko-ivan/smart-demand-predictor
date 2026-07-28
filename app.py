@@ -145,6 +145,22 @@ if forecast_button:
 
         ##### Reorder recommendation
 
+        # predicted = round(
+        #     week["Predicted"].sum()
+        # )
+        #
+        # current_stock = week.iloc[0]["Stock_End_Count"]
+        #
+        # reorder = controller.calculate_reorder(
+        #     current_stock,
+        #     predicted
+        # )
+        #
+        # st.metric(
+        #     "Suggested reorder",
+        #     f"{reorder} items"
+        # )
+
         ##### Feature importance
 
         st.subheader("⭐ Feature importance")

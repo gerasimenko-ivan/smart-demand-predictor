@@ -2,6 +2,7 @@ from src.data_loader import DataLoader
 from src.data_validation import DataValidator
 from src.feature_engineering import FeatureEngineer
 from src.forecasting import ForecastModel
+from src.optimizer import InventoryOptimizer
 
 
 class ProjectController:
@@ -12,6 +13,7 @@ class ProjectController:
         self.validator = DataValidator()
         self.feature_engineer = FeatureEngineer()
         self.forecast_model = ForecastModel()
+        self.optimizer = InventoryOptimizer()
 
     def load_sales_data(self):
 
@@ -104,3 +106,13 @@ class ProjectController:
 
     def get_feature_importance(self):
         return self.forecast_model.feature_importance
+
+    def calculate_reorder(
+            self,
+            current_stock,
+            predicted_demand
+    ):
+        return self.optimizer.calculate_reorder(
+            current_stock,
+            predicted_demand
+        )
