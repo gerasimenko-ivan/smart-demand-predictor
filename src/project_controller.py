@@ -116,3 +116,13 @@ class ProjectController:
             current_stock,
             predicted_demand
         )
+
+    def calculate_stock_risk(
+            self,
+            current_stock,
+            predicted
+    ):
+        return self.optimizer.calculate_stock_risk(
+            current_stock,
+            predicted
+        )

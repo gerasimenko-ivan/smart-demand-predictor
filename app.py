@@ -170,3 +170,19 @@ if forecast_button:
         st.bar_chart(
             importance.set_index("Feature")
         )
+
+        ##### Stock Risk
+
+        # risk = controller.calculate_stock_risk(
+        #     current_stock,
+        #     predicted
+        # )
+        #
+        # if risk == "High":
+        #     st.error("🔴 High Stock Risk")
+        #
+        # elif risk == "Medium":
+        #     st.warning("🟠 Medium Stock Risk")
+        #
+        # else:
+        #     st.success("🟢 Low Stock Risk")
