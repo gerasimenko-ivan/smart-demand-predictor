@@ -1,4 +1,4 @@
-class BusinessInsightGenerator:
+class InsightEngine:
 
     def generate(
             self,
