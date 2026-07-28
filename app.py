@@ -134,3 +134,12 @@ if forecast_button:
             week,
             use_container_width=True
         )
+
+        predicted_demand = round(
+            week["Predicted"].sum()
+        )
+
+        st.metric(
+            "Predicted demand:",
+            f"{predicted_demand} items"
+        )
