@@ -147,3 +147,6 @@ class ProjectController:
             stock_risk,
             feature_importance
         )
+
+    def get_friendly_feature_name(self, feature):
+        return self.insight_generator.friendly_feature_name(feature)

@@ -76,7 +76,7 @@ class BusinessInsightGenerator:
             top_value = round(top_value, 2)
 
             insights.append(
-                f"🤖 AI explanation: The strongest factor "
+                f"✨ AI explanation: The strongest factor "
                 f"affecting this forecast is '{top_feature}' "
                 f"({top_value}% importance)."
             )

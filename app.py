@@ -192,22 +192,9 @@ if forecast_button:
                 top_features["Importance"] * 100
         ).round(2)
 
-        feature_names = {
-            "Average3Days": "Average sales (3 days)",
-            "Average7Days": "Recent weekly demand trend",
-            "Average14Days": "Two weeks demand pattern",
-            "Average30Days": "Monthly demand pattern",
-
-            "YesterdaySales": "Previous day sales",
-            "LastWeekSales": "Previous week performance",
-            "Stock_Start_Count": "Current stock availability",
-            "DayOfWeek": "Day of week",
-            "DayOfYear": "Day of year",
-        }
-
         top_features["Feature"] = (
             top_features["Feature"]
-            .replace(feature_names)
+            .apply(controller.get_friendly_feature_name)
         )
 
         st.dataframe(
