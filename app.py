@@ -145,21 +145,40 @@ if forecast_button:
 
         ##### Reorder recommendation
 
-        # predicted = round(
-        #     week["Predicted"].sum()
-        # )
-        #
-        # current_stock = week.iloc[0]["Stock_End_Count"]
-        #
-        # reorder = controller.calculate_reorder(
-        #     current_stock,
-        #     predicted
-        # )
-        #
-        # st.metric(
-        #     "Suggested reorder",
-        #     f"{reorder} items"
-        # )
+        current_stock = (
+            sales_df[
+                sales_df["Product_Name"] == selected_product
+                ]
+            .sort_values("Date")
+            .iloc[-1]["Stock_End_Count"]
+        )
+
+        predicted_demand = round(
+            week["Predicted"].sum()
+        )
+
+        reorder = controller.calculate_reorder(
+            current_stock,
+            predicted_demand
+        )
+
+        st.subheader(f"📦 Suggested reorder: {reorder} items (Current stock: {current_stock} items)")
+
+        ##### Stock Risk
+
+        risk = controller.calculate_stock_risk(
+            current_stock,
+            predicted_demand
+        )
+
+        if risk == "High":
+            st.error("🔴 High Stock Risk")
+
+        elif risk == "Medium":
+            st.warning("🟠 Medium Stock Risk")
+
+        else:
+            st.success("🟢 Low Stock Risk")
 
         ##### Feature importance
 
@@ -171,18 +190,4 @@ if forecast_button:
             importance.set_index("Feature")
         )
 
-        ##### Stock Risk
 
-        # risk = controller.calculate_stock_risk(
-        #     current_stock,
-        #     predicted
-        # )
-        #
-        # if risk == "High":
-        #     st.error("🔴 High Stock Risk")
-        #
-        # elif risk == "Medium":
-        #     st.warning("🟠 Medium Stock Risk")
-        #
-        # else:
-        #     st.success("🟢 Low Stock Risk")
