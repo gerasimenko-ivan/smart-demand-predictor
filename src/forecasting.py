@@ -177,20 +177,26 @@ class ForecastModel:
         return self.model.predict(X)
 
     def split_data(self, X, y, dates, products):
-        # Important:
-        # do NOT shuffle time series data
-        split_index = int(len(X) * 0.8)
+        # 80% training set / 20% test set
+        unique_dates = sorted(dates.unique())
 
-        X_train = X.iloc[:split_index]
-        X_test = X.iloc[split_index:]
+        split_index = int(len(unique_dates) * 0.8)
 
-        y_train = y.iloc[:split_index]
-        y_test = y.iloc[split_index:]
+        split_date = unique_dates[split_index]
 
-        dates_train = dates.iloc[:split_index]
-        dates_test = dates.iloc[split_index:]
+        train_mask = dates < split_date
+        test_mask = dates >= split_date
 
-        products_train = products.iloc[:split_index]
-        products_test = products.iloc[split_index:]
+        X_train = X.loc[train_mask]
+        X_test = X.loc[test_mask]
+
+        y_train = y.loc[train_mask]
+        y_test = y.loc[test_mask]
+
+        dates_train = dates.loc[train_mask]
+        dates_test = dates.loc[test_mask]
+
+        products_train = products.loc[train_mask]
+        products_test = products.loc[test_mask]
 
         return X_train, X_test, y_train, y_test, dates_train, dates_test, products_train, products_test

@@ -33,30 +33,30 @@ class FeatureEngineer:
 
         df["Average3Days"] = (
             df.groupby("Product_ID")["Sold_Items_Count"]
-            .rolling(3)
-            .mean()
-            .reset_index(level=0, drop=True)
+            .transform(
+                lambda x: x.shift(1).rolling(3).mean()
+            )
         )
 
         df["Average7Days"] = (
             df.groupby("Product_ID")["Sold_Items_Count"]
-            .rolling(7)
-            .mean()
-            .reset_index(level=0, drop=True)
+            .transform(
+                lambda x: x.shift(1).rolling(7).mean()
+            )
         )
 
         df["Average14Days"] = (
             df.groupby("Product_ID")["Sold_Items_Count"]
-            .rolling(14)
-            .mean()
-            .reset_index(level=0, drop=True)
+            .transform(
+                lambda x: x.shift(1).rolling(14).mean()
+            )
         )
 
         df["Average30Days"] = (
             df.groupby("Product_ID")["Sold_Items_Count"]
-            .rolling(30)
-            .mean()
-            .reset_index(level=0, drop=True)
+            .transform(
+                lambda x: x.shift(1).rolling(30).mean()
+            )
         )
 
         # Restore chronological order
