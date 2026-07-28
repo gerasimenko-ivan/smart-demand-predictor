@@ -3,6 +3,7 @@ from src.data_validation import DataValidator
 from src.feature_engineering import FeatureEngineer
 from src.forecasting import ForecastModel
 from src.optimizer import InventoryOptimizer
+from src.business_insights import BusinessInsightGenerator
 
 
 class ProjectController:
@@ -14,6 +15,7 @@ class ProjectController:
         self.feature_engineer = FeatureEngineer()
         self.forecast_model = ForecastModel()
         self.optimizer = InventoryOptimizer()
+        self.insight_generator = BusinessInsightGenerator()
 
     def load_sales_data(self):
 
@@ -125,4 +127,23 @@ class ProjectController:
         return self.optimizer.calculate_stock_risk(
             current_stock,
             predicted
+        )
+
+    def generate_business_insights(
+            self,
+            product,
+            predicted_demand,
+            current_stock,
+            reorder_quantity,
+            stock_risk
+    ):
+        feature_importance = self.get_feature_importance()
+
+        return self.insight_generator.generate(
+            product,
+            predicted_demand,
+            current_stock,
+            reorder_quantity,
+            stock_risk,
+            feature_importance
         )

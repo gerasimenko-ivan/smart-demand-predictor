@@ -216,4 +216,19 @@ if forecast_button:
             use_container_width=True
         )
 
+        ##### AI Business Insights
+
+        st.subheader("🤖 AI Business Insights")
+
+        insights = controller.generate_business_insights(
+            selected_product,
+            predicted_demand,
+            current_stock,
+            reorder,
+            risk
+        )
+
+        for insight in insights:
+            st.write(insight)
+
 
