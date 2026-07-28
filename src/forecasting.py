@@ -28,6 +28,10 @@ class ForecastModel:
                 "Date",
                 "Product_Name",
                 "Promotion_Eligible",
+
+                # Leakage
+                "Stock_End_Count",
+                "Restocked_Items_Count"
             ],
             errors="ignore"
         )
@@ -131,6 +135,21 @@ class ForecastModel:
             end_date
     ):
 
+        # print(self.results["results"]["Product"].value_counts())
+        df = self.results["results"]
+
+        print("\n===== ALL PRODUCTS =====")
+        print(df["Product"].value_counts())
+
+        print("\n===== DATE RANGE =====")
+        print(df["Date"].min())
+        print(df["Date"].max())
+
+        print("\n===== REQUEST =====")
+        print(product_name)
+        print(start_date)
+        print(end_date)
+
         if not self.is_trained:
             raise RuntimeError(
                 "Model has not been trained."
@@ -151,11 +170,11 @@ class ForecastModel:
         return product
 
     def predict(self, df):
-        X, _, _, _ = self.prepare_data(df)
+        data = self.prepare_data(df)
 
-        predictions = self.model.predict(X)
+        X = data["X"]
 
-        return predictions
+        return self.model.predict(X)
 
     def split_data(self, X, y, dates, products):
         # Important:
